@@ -1,4 +1,4 @@
-import { Button } from 'element-react';
+import { Button } from 'antd';
 import { computed, observable } from 'mobx';
 import { observer } from 'mobx-react'
 import * as React from "react"
@@ -20,7 +20,7 @@ export default class TestMobxComp extends React.Component {
     public render() {
         return (
             <div>
-                <Button style={styles.btnStyle} className='btn-calculate' type='text' onClick={
+                <Button style={styles.btnStyle} className='btn-calculate' type='primary' onClick={
                     this.calculate
                 }>amount ++ </Button>
                 <div>{this.price} x {this.amount} = {this.total}</div>

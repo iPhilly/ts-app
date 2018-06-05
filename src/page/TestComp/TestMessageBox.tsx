@@ -1,6 +1,6 @@
-import { Button, Message, MessageBox } from 'element-react';
-import 'element-theme-default';
+import { Button, message, Modal,  } from 'antd';
 import * as React from 'react';
+
 
 export interface IPCounter {
     initialValue: number
@@ -20,7 +20,28 @@ export default class TestMessageBox extends React.Component<IPCounter, ISCounter
         }
     }
 
-    public add = () => () => {
+    public reset = () => {
+
+        const self = this
+
+        Modal.confirm({
+            title: '请确认',
+            // tslint:disable-next-line:object-literal-sort-keys
+            content: '是否清空 value & times',
+            onOk() {
+                self.setState({
+                    clickTimes: 0,
+                    currentValue: self.props.initialValue
+                })
+            },
+            onCancel() {
+                message.info('clicked cancel')
+             },
+        });
+    }   
+
+    // tslint:disable-next-line:member-ordering
+    public add = () => {
 
         const value = this.state.currentValue;
 
@@ -30,39 +51,18 @@ export default class TestMessageBox extends React.Component<IPCounter, ISCounter
         })
     }
 
-    public reset = () => () =>  {
-        
-        this.setState({
-            currentValue: this.props.initialValue
-        });
-
-        MessageBox.confirm('数值已重置,是否重置点击次数?','提示',{
-            type:'warning'
-        }).then(action=>{
-            
-            this.setState({
-                clickTimes: 0
-            });
-
-            Message({
-                message: 'click times is ZERO',
-                type: 'success',
-            })
-        }).catch(()=>{
-            Message('点击次数 未重置')
-        })
-    }
-
+    // tslint:disable-next-line:member-ordering
     public showMessage = () => () => {
-        MessageBox.alert(`Current Value is ${this.state.currentValue}`);
+        message.info(`Current Value is ${this.state.currentValue}`);
     }
+    // tslint:disable-next-line:member-ordering
     public render() {
 
         return (
             <div>
-                <Button onClick={this.add()} type="primary">click me {this.state.clickTimes} time(s)</Button>
+                <Button onClick={this.add} type="primary">click me {this.state.clickTimes} time(s)</Button>
                 <Button onClick={this.showMessage()} type="primary">Show Value</Button>
-                <Button onClick={this.reset()} type="danger" disabled={this.state.currentValue <= this.props.initialValue}>Reset</Button>
+                <Button onClick={this.reset} type="danger" disabled={this.state.currentValue <= this.props.initialValue}>Reset</Button>
             </div>
         )
     }
