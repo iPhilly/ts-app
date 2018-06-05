@@ -1,15 +1,18 @@
-import * as React from 'react';
-import './App.css';
-
-import Hello from './page/Hello';
-import Test from './page/test';
+import * as React from 'react'
+import './App.css'
+import Layout from './page/Layout'
+import Test from './page/TestComp'
 
 class App extends React.Component {
   public render() {
+
+    const chilcNode = (
+      <Test initialValue={2}/>
+    )
+
     return (
       <div className="App">
-        <Hello/>
-        <Test initialValue={2} />
+        <Layout children = {chilcNode}/>
       </div>
     );
   }

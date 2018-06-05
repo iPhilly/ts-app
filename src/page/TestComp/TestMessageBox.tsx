@@ -1,4 +1,4 @@
-import { Button, Message,MessageBox } from 'element-react';
+import { Button, Message, MessageBox } from 'element-react';
 import 'element-theme-default';
 import * as React from 'react';
 
@@ -10,13 +10,13 @@ export interface ISCounter {
     currentValue: number
 }
 
-export default class Test extends React.Component<IPCounter, ISCounter> {
+export default class TestMessageBox extends React.Component<IPCounter, ISCounter> {
 
     constructor(props: IPCounter) {
         super(props)
         this.state = {
             clickTimes: 0,
-            currentValue: props.initialValue,
+            currentValue: props.initialValue
         }
     }
 
@@ -31,16 +31,26 @@ export default class Test extends React.Component<IPCounter, ISCounter> {
     }
 
     public reset = () => () =>  {
-
+        
         this.setState({
-            clickTimes: this.state.clickTimes,
             currentValue: this.props.initialValue
         });
-        
-        Message({
-            message: `Current Value Did reset to ${this.props.initialValue}, plz click 'Show Value' button to view`,
-            type: 'error'
-        });
+
+        MessageBox.confirm('数值已重置,是否重置点击次数?','提示',{
+            type:'warning'
+        }).then(action=>{
+            
+            this.setState({
+                clickTimes: 0
+            });
+
+            Message({
+                message: 'click times is ZERO',
+                type: 'success',
+            })
+        }).catch(()=>{
+            Message('点击次数 未重置')
+        })
     }
 
     public showMessage = () => () => {
