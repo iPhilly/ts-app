@@ -1,12 +1,12 @@
 import * as React from 'react'
 import './App.css'
-import AppLayout from './page/AppLayout'
+import { SiderOnlyLayout } from './page/AppLayout'
 
 class App extends React.Component {
   public render() {
 
     return (
-      <AppLayout />
+      <SiderOnlyLayout collapsed = {false}/>
     );
   }
 }
